@@ -4,7 +4,7 @@ from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.executable import Executable
 from mysite.unmasque.refactored.util.utils import isQ_result_empty
 from mysite.unmasque.src.core import ExtractionPipeLine
-from mysite.unmasque.test import tpchSettings, queries
+from mysite.unmasque.test.util import queries
 
 
 class MyTestCase(unittest.TestCase):

@@ -1,5 +1,6 @@
 import csv
 import os.path
+from pathlib import Path
 
 from ..refactored.abstract.ExtractorBase import Base
 from ..refactored.util.common_queries import drop_table
@@ -11,12 +12,16 @@ class Initiator(Base):
     global_pk_dict = {}
     all_relations = []
     error = None
-    resource_path = "/Users/ahanapradhan/PycharmProjects/UN1/mysite/unmasque/refactored/"
-    pkfkfilename = resource_path + "pkfkrelations.csv"
-    create_index_filename = resource_path + "create_indexes.sql"
+
+    # resource_path = "/Users/ahanapradhan/PycharmProjects/UN1/mysite/unmasque/refactored/"
 
     def __init__(self, connectionHelper):
         super().__init__(connectionHelper, "Initiator")
+        base_path = Path(__file__).parent
+        print(base_path)
+        self.resource_path = (base_path / "util/").resolve()
+        self.pkfk_file_path = (self.resource_path / "pkfkrelations.csv").resolve()
+        self.create_index_filepath = (self.resource_path / "create_indexes.sql").resolve()
 
     def reset(self):
         self.global_index_dict = {}
@@ -46,8 +51,8 @@ class Initiator(Base):
         return True
 
     def verify_support_files(self):
-        check_pkfk = os.path.isfile(self.pkfkfilename)
-        check_idx = os.path.isfile(self.create_index_filename)
+        check_pkfk = os.path.isfile(self.pkfk_file_path)
+        check_idx = os.path.isfile(self.create_index_filepath)
         if (not check_idx) or (not check_pkfk):
             self.error = 'Unmasque Error: \n Support File Not Accessible. '
             print(self.error)
@@ -77,7 +82,7 @@ class Initiator(Base):
     def make_index_dict(self):
         # GET INDEXES
         self.global_index_dict = {elt: [] for elt in self.all_relations}
-        with open(self.create_index_filename, 'rt') as f:
+        with open(self.create_index_filepath, 'rt') as f:
             for row in f:
                 for elt in self.all_relations:
                     if str(row).find(str(elt.upper() + "_")) >= 0:
@@ -112,7 +117,7 @@ class Initiator(Base):
 
     def get_all_pkfk(self):
         all_pkfk = []
-        with open(self.pkfkfilename, 'rt') as f:
+        with open(self.pkfk_file_path, 'rt') as f:
             data = csv.reader(f)
             all_pkfk = list(data)[1:]
         return all_pkfk

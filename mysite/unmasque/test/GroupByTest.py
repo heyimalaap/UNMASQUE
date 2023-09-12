@@ -3,7 +3,7 @@ import unittest
 
 from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.groupby_clause import GroupBy
-from mysite.unmasque.test import tpchSettings, queries
+from mysite.unmasque.test.util import queries, tpchSettings
 
 
 class MyTestCase(unittest.TestCase):

@@ -52,7 +52,6 @@ class Executable(Base):
         result = []
         try:
             res, description = self.connectionHelper.execute_sql_fetchall(query)
-            self.method_call_count += 1
             colnames = [desc[0] for desc in description]
             result.append(tuple(colnames))
             if res is not None:
@@ -63,7 +62,3 @@ class Executable(Base):
             raise error
         return result
 
-
-def getExecOutput(connHelper, args):
-    executable = Executable(connHelper)
-    return executable.doJob(args), executable.method_call_count

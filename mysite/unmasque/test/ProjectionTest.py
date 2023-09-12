@@ -3,7 +3,7 @@ import unittest
 
 from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.projection import Projection
-from mysite.unmasque.test import queries, tpchSettings
+from mysite.unmasque.test.util import queries, tpchSettings
 
 
 class MyTestCase(unittest.TestCase):
