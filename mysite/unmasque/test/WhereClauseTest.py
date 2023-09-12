@@ -2,7 +2,7 @@ import unittest
 
 from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.view_minimizer import ViewMinimizer
-from mysite.unmasque.refactored.where_clause import WhereClause
+from mysite.unmasque.refactored.abstract.where_clause import WhereClause
 from mysite.unmasque.test import tpchSettings, queries
 
 
