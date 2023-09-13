@@ -13,8 +13,6 @@ class Initiator(Base):
     all_relations = []
     error = None
 
-    # resource_path = "/Users/ahanapradhan/PycharmProjects/UN1/mysite/unmasque/refactored/"
-
     def __init__(self, connectionHelper):
         super().__init__(connectionHelper, "Initiator")
         base_path = Path(__file__).parent

@@ -24,3 +24,12 @@ MIN = 'Min'
 MAX = 'Max'
 COUNT = 'Count'
 COUNT_STAR = 'Count(*)'
+
+DATABASE_SECTION = "database"
+SUPPORT_SECTION = "support"
+HOST = "host"
+PORT = "port"
+USER = "user"
+PASSWORD = "password"
+DBNAME = "dbname"
+SCHEMA = "schema"
