@@ -14,7 +14,27 @@ def parse_config_field(config_object, field, section, field_name):
 
 
 class Config:
+    _instance = None
+    user = None
+    password = None
+    port = None
+    dbname = None
+    schema = None
+    pkfk = None
+    index_maker = None
+    host = None
+    config_loaded = False
+    base_path = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(Config, cls).__new__(cls)
+        return cls._instance
+
     def __init__(self):
+        self.load_default()
+
+    def load_default(self):
         # default values
         self.index_maker = "create_indexes.sql"
         self.pkfk = "pkfkrelations.csv"
@@ -26,8 +46,11 @@ class Config:
         self.host = "localhost"
 
     def parse_config(self):
-        config_file_path = Path(__file__).parent.parent.parent.parent
-        config_file = (config_file_path / "config.ini").resolve()
+        if self.config_loaded:
+            return
+
+        self.base_path = Path(__file__).parent.parent.parent.parent
+        config_file = (self.base_path / "config.ini").resolve()
         config_object = configparser.ConfigParser()
         with open(config_file, "r") as file_object:
             config_object.read_file(file_object)
@@ -42,3 +65,4 @@ class Config:
             for i in range(len(support_fields)):
                 parse_config_field(config_object, support_fields[i], SUPPORT_SECTION, support_field_names[i])
 
+        self.config_loaded = True

@@ -6,7 +6,7 @@ from mysite.unmasque.refactored.initialization import Initiator
 
 class MyTestCase(unittest.TestCase):
     def test_init(self):
-        conn = ConnectionHelper("tpch", "postgres", "postgres", "5432", "localhost")
+        conn = ConnectionHelper()
         conn.connectUsingParams()
         self.assertTrue(conn.conn is not None)
         initor = Initiator(conn)

@@ -1,6 +1,8 @@
 import psycopg2
 import psycopg2.extras
 
+from mysite.unmasque.src.util.configParser import Config
+
 
 def cus_execute_sqls(cur, sqls):
     print(cur)
@@ -33,14 +35,17 @@ def cur_execute_sql_fetch_one(cur, sql):
 
 
 class ConnectionHelper:
+    config = None
     conn = None
     paramString = None
     db = None
 
-    def __init__(self, dbname, user, password, port, host="localhost"):
-        self.db = dbname
-        self.paramString = "dbname=" + dbname + " user=" + user + \
-                           " password=" + password + " host=" + host + " port=" + port
+    def __init__(self):
+        self.config = Config()
+        self.config.parse_config()
+        self.db = self.config.dbname
+        self.paramString = "dbname=" + self.config.dbname + " user=" + self.config.user + \
+                           " password=" + self.config.password + " host=" + self.config.host + " port=" + self.config.port
 
     def closeConnection(self):
         if self.conn is not None:

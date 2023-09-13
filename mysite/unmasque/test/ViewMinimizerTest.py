@@ -7,7 +7,7 @@ from mysite.unmasque.test.util import queries, tpchSettings
 
 
 class MyTestCase(unittest.TestCase):
-    conn = ConnectionHelper("tpch", "postgres", "postgres", "5432", "localhost")
+    conn = ConnectionHelper()
 
     def test_for_cs2_pass_single_table(self):
         self.conn.connectUsingParams()
@@ -26,7 +26,7 @@ class MyTestCase(unittest.TestCase):
         self.conn.closeConnection()
 
     def test_for_cs2_pass_tpch_query3(self):
-        self.conn = ConnectionHelper("tpch", "postgres", "postgres", "5432", "localhost")
+        self.conn = ConnectionHelper()
         self.conn.connectUsingParams()
         self.assertTrue(self.conn.conn is not None)
 

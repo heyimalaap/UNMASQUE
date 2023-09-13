@@ -9,7 +9,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_like_tpchq1(self):
         query = queries.tpch_query1
-        conn = ConnectionHelper("tpch", "postgres", "postgres", "5432", "localhost")
+        conn = ConnectionHelper()
         conn.connectUsingParams()
         self.assertTrue(conn.conn is not None)
         fc = FromClause(conn)
@@ -20,7 +20,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_like_tpchq3(self):
         query = queries.tpch_query3
-        conn = ConnectionHelper("tpch", "postgres", "postgres", "5432", "localhost")
+        conn = ConnectionHelper()
         conn.connectUsingParams()
         self.assertTrue(conn.conn is not None)
         fc = FromClause(conn)

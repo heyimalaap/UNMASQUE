@@ -1,6 +1,5 @@
 import csv
 import os.path
-from pathlib import Path
 
 from ..refactored.abstract.ExtractorBase import Base
 from ..refactored.util.common_queries import drop_table
@@ -15,11 +14,10 @@ class Initiator(Base):
 
     def __init__(self, connectionHelper):
         super().__init__(connectionHelper, "Initiator")
-        base_path = Path(__file__).parent
-        print(base_path)
-        self.resource_path = (base_path / "util/").resolve()
-        self.pkfk_file_path = (self.resource_path / "pkfkrelations.csv").resolve()
-        self.create_index_filepath = (self.resource_path / "create_indexes.sql").resolve()
+        self.resource_path = connectionHelper.config.base_path
+        self.pkfk_file_path = (self.resource_path / connectionHelper.config.pkfk).resolve()
+        self.create_index_filepath = (self.resource_path / connectionHelper.config.index_maker).resolve()
+        self.schema = connectionHelper.config.schema
 
     def reset(self):
         self.global_index_dict = {}
@@ -33,8 +31,8 @@ class Initiator(Base):
         try:
             res, desc = self.connectionHelper.execute_sql_fetchall(
                 "SELECT table_name FROM information_schema.tables "
-                "WHERE table_schema = 'public' and TABLE_CATALOG= '" + self.connectionHelper.db + "';")
-            self.connectionHelper.execute_sql(["SET search_path = 'public';"])
+                "WHERE table_schema = '" + self.schema + "' and TABLE_CATALOG= '" + self.connectionHelper.db + "';")
+            self.connectionHelper.execute_sql(["SET search_path = '" + self.schema + "';"])
             for val in res:
                 self.all_relations.add(val[0])
         except Exception as error:

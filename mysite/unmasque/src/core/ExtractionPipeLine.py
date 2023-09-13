@@ -1,5 +1,6 @@
 from .QueryStringGenerator import QueryStringGenerator
 from .elapsed_time import create_zero_time_profile
+from ...refactored.ConnectionHelper import ConnectionHelper
 from ...refactored.aggregation import Aggregation
 from ...refactored.cs2 import Cs2
 from ...refactored.equi_join import EquiJoin
@@ -12,8 +13,11 @@ from ...refactored.projection import Projection
 from ...refactored.view_minimizer import ViewMinimizer
 
 
-def extract(connectionHelper,
-            query):
+def extract(query):
+
+    connectionHelper = ConnectionHelper()
+    connectionHelper.connectUsingParams()
+
     time_profile = create_zero_time_profile()
 
     '''
@@ -182,5 +186,7 @@ def extract(connectionHelper,
     q_generator = QueryStringGenerator(connectionHelper)
     eq = q_generator.generate_query_string(fc, ej, fl, pj, gb, agg, ob, lm)
     # print("extracted query :\n", eq)
+
+    connectionHelper.closeConnection()
 
     return eq, time_profile
