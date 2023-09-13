@@ -1,6 +1,6 @@
 import unittest
 
-from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
+from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.initialization import Initiator
 
 

@@ -1,6 +1,6 @@
 import unittest
 
-from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
+from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.cs2 import Cs2
 from mysite.unmasque.refactored.view_minimizer import ViewMinimizer
 from mysite.unmasque.test.util import queries, tpchSettings

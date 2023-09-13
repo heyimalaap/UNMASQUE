@@ -2,7 +2,7 @@ import datetime
 import unittest
 
 from mysite.unmasque.refactored.aggregation import Aggregation
-from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
+from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.test.util import queries, tpchSettings
 
 

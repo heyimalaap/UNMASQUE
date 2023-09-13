@@ -1,4 +1,3 @@
-from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.src.core import ExtractionPipeLine
 
 # Press the green button in the gutter to run the script.
