@@ -1,8 +1,8 @@
 import copy
 
-from mysite.unmasque.refactored.abstract.ExtractorBase import Base
-from mysite.unmasque.refactored.executable import Executable
-from mysite.unmasque.refactored.util.utils import is_int
+from .ExtractorBase import Base
+from ..executable import Executable
+from ..util.utils import is_int
 
 
 class WhereClause(Base):

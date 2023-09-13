@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 
-from mysite.unmasque.src.util.configParser import Config
+from .configParser import Config
 
 
 def cus_execute_sqls(cur, sqls):

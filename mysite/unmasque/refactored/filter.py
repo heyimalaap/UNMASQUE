@@ -1,9 +1,9 @@
 import copy
 import math
 
-from mysite.unmasque.refactored.util.utils import isQ_result_empty, get_val_plus_delta, get_cast_value, \
+from .util.utils import isQ_result_empty, get_val_plus_delta, get_cast_value, \
     get_min_and_max_val, get_format, get_mid_val, is_left_less_than_right_by_cutoff
-from mysite.unmasque.refactored.abstract.where_clause import WhereClause
+from .abstract.where_clause import WhereClause
 
 
 class Filter(WhereClause):

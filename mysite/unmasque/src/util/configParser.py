@@ -1,7 +1,7 @@
 import configparser
 from pathlib import Path
 
-from mysite.unmasque.src.util.constants import DATABASE_SECTION, HOST, PORT, USER, PASSWORD, SCHEMA, DBNAME, \
+from .constants import DATABASE_SECTION, HOST, PORT, USER, PASSWORD, SCHEMA, DBNAME, \
     SUPPORT_SECTION
 
 

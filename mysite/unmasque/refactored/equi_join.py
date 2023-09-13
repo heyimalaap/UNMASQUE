@@ -1,8 +1,8 @@
 import copy
 
-from mysite.unmasque.refactored.util.utils import get_datatype_from_typesList, get_dummy_val_for, get_val_plus_delta, \
+from .util.utils import get_datatype_from_typesList, get_dummy_val_for, get_val_plus_delta, \
     get_all_combo_lists
-from mysite.unmasque.refactored.abstract.where_clause import WhereClause
+from .abstract.where_clause import WhereClause
 
 
 def get_two_different_vals(list_type):
