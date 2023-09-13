@@ -38,8 +38,10 @@ pkfkrelations.csv --> contains key details for the TPCH schema. If any other sch
 ### Running Unmasque
 Open `mysite/unmasque/src/main_cmd.py` file.  
 This script has one default input specified.  
-Change this query to try Unmasque for various inputs.  
+Change this query to try Unmasque for various inputs. 
+
+Change current directory to `mysite`.
 Use the following command:  
-`python main_cmd.py`  
+`python -m unmasque.src.main_cmd`  
 
 
