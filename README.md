@@ -2,7 +2,7 @@
 # UN1
 This code corresponds to UNMASQUE Project: https://dsl.cds.iisc.ac.in/projects/HIDDEN/index.html  
 UNMASQUE code for https://dsl.cds.iisc.ac.in/publications/report/TR/TR-2021-02_updated.pdf    
-This repository contains code developed as part of various theses in UN1.   
+This repository contains code developed by various students who worked on the project.   
 The code is organized into the following directories:  
 
 ## mysite
@@ -36,10 +36,10 @@ create_indexes.sql --> currently empty.  (do not delete this file.)
 pkfkrelations.csv --> contains key details for the TPCH schema. If any other schema is to be used, change this file accordingly.  
 
 ### Running Unmasque
-Open `mysite/unmasque/src/my_cmd.py` file.  
+Open `mysite/unmasque/src/main_cmd.py` file.  
 This script has one default input specified.  
 Change this query to try Unmasque for various inputs.  
 Use the following command:  
-`python my_cmd.py`  
+`python main_cmd.py`  
 
 
