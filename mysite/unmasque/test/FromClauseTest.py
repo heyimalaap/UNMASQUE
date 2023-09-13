@@ -1,6 +1,6 @@
 import unittest
 
-from mysite.unmasque.refactored.ConnectionHelper import ConnectionHelper
+from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
 from mysite.unmasque.refactored.from_clause import FromClause
 from mysite.unmasque.test.util import queries
 

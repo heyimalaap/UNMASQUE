@@ -1,6 +1,6 @@
 from .QueryStringGenerator import QueryStringGenerator
 from .elapsed_time import create_zero_time_profile
-from ...refactored.ConnectionHelper import ConnectionHelper
+from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
 from ...refactored.aggregation import Aggregation
 from ...refactored.cs2 import Cs2
 from ...refactored.equi_join import EquiJoin
