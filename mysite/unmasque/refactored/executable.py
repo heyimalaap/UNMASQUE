@@ -1,5 +1,5 @@
-
 from ..refactored.abstract.ExtractorBase import Base
+
 
 def get_result_as_tuple_1(res, result):
     for row in res:
@@ -11,7 +11,6 @@ def get_result_as_tuple_1(res, result):
         row_as_tuple = tuple(str(val) for val in row)
         result.append(row_as_tuple)
     return result
-
 
 
 class Executable(Base):
@@ -36,4 +35,3 @@ class Executable(Base):
             print('Executable could not be run. Error: ' + str(error))
             raise error
         return result
-

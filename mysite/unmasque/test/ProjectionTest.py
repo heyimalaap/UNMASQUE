@@ -35,7 +35,7 @@ class MyTestCase(unittest.TestCase):
              'l_tax', 'l_returnflag', 'l_linestatus', 'l_shipdate', 'l_commitdate', 'l_receiptdate', 'l_shipinstruct',
              'l_shipmode', 'l_comment']]
 
-        filter_predicates = [('lineitem', 'l_shipdate', '<=', datetime.date(1998, 9, 21), datetime.date(9999, 12, 31))]
+        filter_predicates = [('lineitem', 'l_shipdate', '<=', datetime.date(1, 1, 1), datetime.date(1998, 9, 21))]
 
         join_graph = []
 
@@ -80,15 +80,6 @@ class MyTestCase(unittest.TestCase):
         self.assertTrue(self.conn.conn is not None)
 
         from_rels = tpchSettings.from_rels['Q3']
-        # minimizer = ViewMinimizer(self.conn, from_rels, False)
-        # check = minimizer.doJob(queries.Q3)
-        # self.assertTrue(check)
-
-        # wc = WhereClause(self.conn, tpchSettings.key_lists, from_rels,
-        #                 minimizer.global_other_info_dict, minimizer.global_result_dict,
-        #                 minimizer.global_min_instance_dict)
-
-        # wc.doJob(queries.Q3)
 
         filter_predicates = [('customer', 'c_mktsegment', 'equal', 'BUILDING', 'BUILDING'),
                              ('orders', 'o_orderdate', '<=', datetime.date(1, 1, 1), datetime.date(1995, 3, 14)),
@@ -147,9 +138,9 @@ class MyTestCase(unittest.TestCase):
         check = pj.doJob(queries.Q3)
         self.assertTrue(check)
 
-        self.assertEqual(frozenset({'orderkey', 'revenue', 'orderdate', 'shippriority'}),
+        self.assertEqual(frozenset({'orderkey', 'revenue', 'totalprice', 'shippriority'}),
                          frozenset(set(pj.projection_names)))
-        self.assertEqual(frozenset({'o_orderkey', 'l_discount', 'o_orderdate', 'o_shippriority'}),
+        self.assertEqual(frozenset({'o_orderkey', 'l_discount', 'o_totalprice', 'o_shippriority'}),
                          frozenset(set(pj.projected_attribs)))
 
         self.conn.closeConnection()
@@ -219,9 +210,9 @@ class MyTestCase(unittest.TestCase):
 
         self.assertEqual(frozenset({'orderkey', 'revenue', 'orderdate', 'shippriority'}),
                          frozenset(set(pj.projection_names)))
-        # to-do: check if the projected attributes for 'revenue' col is indeed ''
-        # self.assertEqual(frozenset({'o_orderkey', '', 'o_orderdate', 'o_shippriority'}),
-        #                  frozenset(set(pj.projected_attribs)))
+        self.assertEqual(frozenset(
+            {'o_orderkey', 'l_quantity+l_extendedprice-1.0*l_extendedprice*l_discount', 'o_orderdate',
+             'o_shippriority'}), frozenset(set(pj.projected_attribs)))
 
         self.conn.closeConnection()
 

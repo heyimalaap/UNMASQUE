@@ -33,3 +33,8 @@ USER = "user"
 PASSWORD = "password"
 DBNAME = "dbname"
 SCHEMA = "schema"
+
+IDENTICAL_EXPR = "identical_expr_nc"
+# we use 1 and 999 to limit, otw overflow can occur
+pr_min = 1
+pr_max = 999

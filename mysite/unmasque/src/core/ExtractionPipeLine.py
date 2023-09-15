@@ -132,7 +132,10 @@ def extract(query):
                       ej.global_join_graph,
                       pj.projected_attribs,
                       gb.has_groupby,
-                      gb.group_by_attrib)
+                      gb.group_by_attrib,
+                      pj.dependencies,
+                      pj.solution,
+                      pj.param_list)
     check = agg.doJob(query)
     time_profile.update_for_aggregate(agg.local_elapsed_time)
     if not check:
