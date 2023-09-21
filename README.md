@@ -16,7 +16,9 @@ Follow the link https://www.postgresql.org/download/ to download and install the
 1. Download the code `tpch-pgsql` from the link: [https://github.com/Data-Science-Platform/tpch-pgsql/tree/master](https://github.com/ahanapradhan/tpch-pgsql).  
 2. Follow the `tpch-pgsql` project Readme to prepare and load the data.  
 3. (In case the above command gives error as `malloc.h` not found, showing the filenames, go inside dbgen folder, open the file and replace `malloc.h` with `stdlib.h`)  
-   
+
+# Setting up IDE  
+A developement environment for python project is required next. Here is the link to PyCharm Community Edition: https://www.jetbrains.com/pycharm/download/  (Any other IDE is also fine)
 
 # Setting Up the UN1 Code
 This code corresponds to UNMASQUE Project: https://dsl.cds.iisc.ac.in/projects/HIDDEN/index.html  
