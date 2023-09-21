@@ -5,7 +5,8 @@ import math
 from ..refactored.abstract.GenerationPipeLineBase import GenerationPipeLineBase
 from ..refactored.util.utils import is_number, get_val_plus_delta, get_dummy_val_for, get_format, \
     get_char, isQ_result_empty
-from ..src.util.constants import SUM, AVG, MIN, MAX, COUNT, COUNT_STAR, max_int_val, min_int_val
+from ..src.util.constants import SUM, AVG, MIN, MAX, COUNT, COUNT_STAR
+from ..src.util.constants import min_int_val, max_int_val
 
 
 def get_k_value_for_number(a, b):

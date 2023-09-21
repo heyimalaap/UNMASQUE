@@ -25,10 +25,6 @@ def extract_start_and_end_page(rctid):
 
 class ViewMinimizer(Minimizer):
     max_row_no = 1
-    working_dir = "/Users/ahanapradhan/Desktop/Projects/UNMASQUE/reduced_data/"
-
-    def set_max_row_no(self, no):
-        self.max_row_no = no
 
     def __init__(self, connectionHelper,
                  core_relations, core_sizes,
@@ -119,7 +115,6 @@ class ViewMinimizer(Minimizer):
             res, desc = self.connectionHelper.execute_sql_fetchall(get_star(tabname))
             self.connectionHelper.execute_sql([drop_table(get_tabname_4(tabname)),
                                                create_table_as_select_star_from(get_tabname_4(tabname), tabname)])
-            self.export_vm_data(tabname, )
             print(tabname, "==", res)
 
         if not self.sanity_check(query):
@@ -127,11 +122,6 @@ class ViewMinimizer(Minimizer):
 
         self.populate_dict_info(query)
         return True
-
-    def export_vm_data(self, tab):
-        self.connectionHelper.execute_sql(["COPY " + tab + " TO '"
-                                           + self.working_dir + tab
-                                           + ".csv' DELIMITER ',' CSV HEADER;"])
 
     def do_binary_halving_1(self, core_sizes, query, tabname, tabname1):
         while int(core_sizes[tabname]) > self.max_row_no:

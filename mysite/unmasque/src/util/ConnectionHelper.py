@@ -2,14 +2,15 @@ import psycopg2
 import psycopg2.extras
 
 from .configParser import Config
+from .constants import DBNAME, HOST, PORT, USER, PASSWORD, SCHEMA
 
 
 def cus_execute_sqls(cur, sqls):
-    print(cur)
+    # print(cur)
     for sql in sqls:
-        print("..cur execute.." + sql)
+        # print("..cur execute.." + sql)
         cur.execute(sql)
-        print("..done")
+        # print("..done")
     cur.close()
 
 
@@ -35,14 +36,38 @@ def cur_execute_sql_fetch_one(cur, sql):
 
 
 class ConnectionHelper:
-    config = None
-    conn = None
-    paramString = None
-    db = None
 
-    def __init__(self):
+    def __init__(self, **kwargs):
+        """
+        Default configs are loaded first
+        """
         self.config = Config()
+
+        """
+        If config.ini available in the backend, prioritize it
+        """
         self.config.parse_config()
+
+        """
+        If configs come from the caller (e.g. UI), prioritize it
+        """
+        for key, value in kwargs.items():
+            if key == DBNAME:
+                self.config.dbname = value
+            elif key == HOST:
+                self.config.host = value
+            elif key == PORT:
+                self.config.port = value
+            elif key == USER:
+                self.config.user = value
+            elif key == PASSWORD:
+                self.config.password = value
+            elif key == SCHEMA:
+                self.config.schema = value
+
+        self.config.config_loaded = True
+
+        self.conn = None
         self.db = self.config.dbname
         self.paramString = "dbname=" + self.config.dbname + " user=" + self.config.user + \
                            " password=" + self.config.password + " host=" + self.config.host + " port=" + self.config.port
@@ -57,9 +82,9 @@ class ConnectionHelper:
 
     def getConnection(self):
         if self.conn is None:
-            print("connecting...")
+            # print("connecting...")
             self.connectUsingParams()
-            print("done!")
+            # print("done!")
         return self.conn
 
     def execute_sql(self, sqls):
@@ -88,7 +113,7 @@ class ConnectionHelper:
 
     def execute_sql_fetchall(self, sql):
         cur = self.get_cursor()
-        print("...", sql, "...")
+        # print("...", sql, "...")
         cur.execute(sql)
         res = cur.fetchall()
         des = cur.description
