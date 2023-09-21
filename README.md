@@ -13,7 +13,7 @@ Follow the link https://www.postgresql.org/download/ to download and install the
 4. Unzip the zip file, and it must have the `dbgen` folder among the extracted contents  
 
 ### Prepare TPCH data on PostgreSQL using DBGEN
-1. Download the code `tpch-pgsql` from the link: https://github.com/Data-Science-Platform/tpch-pgsql/tree/master.  
+1. Download the code `tpch-pgsql` from the link: [https://github.com/Data-Science-Platform/tpch-pgsql/tree/master](https://github.com/ahanapradhan/tpch-pgsql).  
 2. Follow the `tpch-pgsql` project Readme to prepare and load the data.  
 3. (In case the above command gives error as `malloc.h` not found, showing the filenames, go inside dbgen folder, open the file and replace `malloc.h` with `stdlib.h`)  
    
