@@ -1,13 +1,13 @@
 import unittest
 
-from mysite.unmasque.src.core import ExtractionPipeLine
+from mysite.unmasque.src.pipeline import ExtractionPipeLine
 from mysite.unmasque.test.util import queries
 
 
 class MyTestCase(unittest.TestCase):
 
-    def test_for_tpch_query1(self):
-        q_key = 'tpch_query1'
+    def test_for_tpch_query3(self):
+        q_key = 'tpch_query3'
         query = queries.queries_dict[q_key]
         eq, _ = ExtractionPipeLine.extract(query)
         self.assertTrue(eq is not None)

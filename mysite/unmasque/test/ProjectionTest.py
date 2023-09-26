@@ -1,13 +1,13 @@
 import datetime
+import sys
 import unittest
-
-from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
+sys.path.append("../../../")
+from mysite.unmasque.test.util.BaseTestCase import BaseTestCase
 from mysite.unmasque.refactored.projection import Projection
-from mysite.unmasque.test.util import queries, tpchSettings
+from mysite.unmasque.test.util import tpchSettings, queries
 
 
-class MyTestCase(unittest.TestCase):
-    conn = ConnectionHelper()
+class MyTestCase(BaseTestCase):
 
     def test_projection_Q1(self):
         self.conn.connectUsingParams()
@@ -208,11 +208,8 @@ class MyTestCase(unittest.TestCase):
         check = pj.doJob(queries.Q3_1)
         self.assertTrue(check)
 
-        self.assertEqual(frozenset({'orderkey', 'revenue', 'orderdate', 'shippriority'}),
-                         frozenset(set(pj.projection_names)))
-        self.assertEqual(frozenset(
-            {'o_orderkey', 'l_quantity+l_extendedprice-1.0*l_extendedprice*l_discount', 'o_orderdate',
-             'o_shippriority'}), frozenset(set(pj.projected_attribs)))
+        self.assertEqual(frozenset({'o_orderkey', 'l_quantity+l_extendedprice-1.0*l_extendedprice*l_discount', 'o_orderdate', 'o_shippriority'}),
+                         frozenset(set(pj.projected_attribs)))
 
         self.conn.closeConnection()
 

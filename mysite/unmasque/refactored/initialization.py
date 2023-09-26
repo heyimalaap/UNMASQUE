@@ -3,14 +3,10 @@ import os.path
 
 from ..refactored.abstract.ExtractorBase import Base
 from ..refactored.util.common_queries import drop_table
+from ..src.pipeline.abstract.TpchSanitizer import TpchSanitizer
 
 
 class Initiator(Base):
-    global_index_dict = {}
-    global_key_lists = [[]]
-    global_pk_dict = {}
-    all_relations = []
-    error = None
 
     def __init__(self, connectionHelper):
         super().__init__(connectionHelper, "Initiator")
@@ -18,6 +14,11 @@ class Initiator(Base):
         self.pkfk_file_path = (self.resource_path / connectionHelper.config.pkfk).resolve()
         self.create_index_filepath = (self.resource_path / connectionHelper.config.index_maker).resolve()
         self.schema = connectionHelper.config.schema
+        self.global_index_dict = {}
+        self.global_key_lists = [[]]
+        self.global_pk_dict = {}
+        self.all_relations = []
+        self.error = None
 
     def reset(self):
         self.global_index_dict = {}
@@ -25,26 +26,6 @@ class Initiator(Base):
         self.global_pk_dict = {}
         self.all_relations = []
         self.error = None
-
-    def get_all_relations(self):
-        self.all_relations = set()
-        try:
-            res, desc = self.connectionHelper.execute_sql_fetchall(
-                "SELECT table_name FROM information_schema.tables "
-                "WHERE table_schema = '" + self.schema + "' and TABLE_CATALOG= '" + self.connectionHelper.db + "';")
-            self.connectionHelper.execute_sql(["SET search_path = '" + self.schema + "';"])
-            for val in res:
-                self.all_relations.add(val[0])
-        except Exception as error:
-            print("Can not obtain table names. Error: " + str(error))
-            return False
-
-        if not self.all_relations:
-            print("No table in the selected instance. Please select another instance.")
-            return False
-
-        self.connectionHelper.execute_sql([drop_table("temp")])
-        return True
 
     def verify_support_files(self):
         check_pkfk = os.path.isfile(self.pkfk_file_path)
@@ -56,11 +37,11 @@ class Initiator(Base):
 
     def doActualJob(self, args):
         print("inside -- initialization.initialization")
+        self.sanitize()
+        print("sanitized!")
         self.reset()
 
-        tables_check = self.get_all_relations()
-        if not tables_check:
-            return False
+        self.all_relations = self.get_all_relations()
 
         check = self.verify_support_files()
         if not check:

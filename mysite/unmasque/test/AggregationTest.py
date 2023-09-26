@@ -1,13 +1,16 @@
 import datetime
+import sys
 import unittest
 
+from mysite.unmasque.src.util.constants import IDENTICAL_EXPR
+from mysite.unmasque.test.util.BaseTestCase import BaseTestCase
+
+sys.path.append("../../../")
 from mysite.unmasque.refactored.aggregation import Aggregation
-from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
-from mysite.unmasque.test.util import queries, tpchSettings
+from mysite.unmasque.test.util import tpchSettings, queries
 
 
-class MyTestCase(unittest.TestCase):
-    conn = ConnectionHelper()
+class MyTestCase(BaseTestCase):
 
     def test_agg_Q1(self):
         self.conn.connectUsingParams()
@@ -232,9 +235,9 @@ class MyTestCase(unittest.TestCase):
         global_key_attribs = ['l_orderkey', 'c_custkey', 'o_custkey', 'o_orderkey', ]
         has_groupBy = True
         group_by_attribs = ['l_orderkey', 'o_orderdate', 'o_shippriority']
-        dep = [[('identical_expr_nc', 'o_orderkey')],
+        dep = [[(IDENTICAL_EXPR, 'o_orderkey')],
                [('lineitem', 'l_quantity'), ('lineitem', 'l_extendedprice'), ('lineitem', 'l_discount')],
-               [('identical_expr_nc', 'o_orderdate')], [('identical_expr_nc', 'o_shippriority')]]
+               [(IDENTICAL_EXPR, 'o_orderdate')], [(IDENTICAL_EXPR, 'o_shippriority')]]
         sol = [[], [[1.], [1.], [0.], [0.], [-1.], [-0.], [-0.], [0.]], [], []]
         p_list = [[], ['l_quantity', 'l_extendedprice', 'l_discount', 'l_quantity*l_extendedprice',
                        'l_extendedprice*l_discount', 'l_discount*l_quantity', 'l_quantity*l_extendedprice*l_discount'],

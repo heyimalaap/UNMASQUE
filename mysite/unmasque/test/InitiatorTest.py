@@ -1,15 +1,17 @@
+import sys
 import unittest
 
-from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
+sys.path.append("../../../")
 from mysite.unmasque.refactored.initialization import Initiator
+from mysite.unmasque.test.util.BaseTestCase import BaseTestCase
 
 
-class MyTestCase(unittest.TestCase):
+class MyTestCase(BaseTestCase):
+
     def test_init(self):
-        conn = ConnectionHelper()
-        conn.connectUsingParams()
-        self.assertTrue(conn.conn is not None)
-        initor = Initiator(conn)
+        self.conn.connectUsingParams()
+        self.assertTrue(self.conn.conn is not None)
+        initor = Initiator(self.conn)
         initor.doJob()
         self.assertEqual(len(initor.global_index_dict), 8)
 
@@ -32,6 +34,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(initor.global_pk_dict['nation'], 'n_nationkey')
         self.assertEqual(initor.global_pk_dict['region'], 'r_regionkey')
         self.assertEqual(initor.global_pk_dict['lineitem'], 'l_orderkey,l_linenumber')
+        self.conn.closeConnection()
 
 
 if __name__ == '__main__':

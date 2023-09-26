@@ -6,6 +6,28 @@ tpch_query3 = "select c_mktsegment, l_orderkey, sum(l_extendedprice) as revenue,
               "and l_orderkey = o_orderkey and o_orderdate > date '1995-10-11' " \
               "group by l_orderkey, o_orderdate, o_shippriority, c_mktsegment limit 4;"
 
+q1 = "select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, " \
+     "sum(l_extendedprice) as sum_base_price, " \
+     "sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, " \
+     "sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, " \
+     "avg(l_quantity) as avg_qty," \
+     "avg(l_extendedprice) as avg_price, " \
+     "avg(l_discount) as avg_disc, " \
+     "count(*) as count_order " \
+     "from lineitem where l_shipdate <= date '1998-12-01' group by " \
+     "l_returnflag, l_linestatus order by l_returnflag, l_linestatus LIMIT 10;"
+
+q1_simple = "select l_returnflag, l_linestatus, " \
+            "sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, " \
+            "count(*) as count_order " \
+            "from lineitem group by " \
+            "l_returnflag, l_linestatus order by l_returnflag, l_linestatus LIMIT 10;"
+
+q1_filter = "select l_returnflag, l_linestatus, " \
+            "count(*) as count_order " \
+            "from lineitem where l_shipdate >= date '1998-12-01' and l_shipdate < date '1999-12-05' group by " \
+            "l_returnflag, l_linestatus order by l_returnflag, l_linestatus LIMIT 10;"
+
 Q1 = "select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, " \
      "sum(l_discount) as sum_disc_price, sum(l_tax) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) " \
      "as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date " \
@@ -14,18 +36,17 @@ Q2 = "select s_acctbal, s_name, n_name, p_partkey, p_mfgr, s_address, s_phone, s
      "partsupp, nation, region where p_partkey = ps_partkey and s_suppkey = ps_suppkey and p_size = 38 and p_type " \
      "like '%TIN' and s_nationkey = n_nationkey and n_regionkey = r_regionkey and r_name = 'MIDDLE EAST' order by " \
      "s_acctbal desc, n_name, s_name limit 100;"
-Q3 = "select l_orderkey as orderkey, sum(l_discount) as revenue, sum(o_totalprice) as totalprice, o_shippriority as " \
+Q3 = "select l_orderkey as orderkey, sum(l_discount) as revenue, o_totalprice as totalprice, o_shippriority as " \
      "shippriority from customer, orders, " \
      "lineitem where c_mktsegment = 'BUILDING' and c_custkey = o_custkey and l_orderkey = o_orderkey and o_orderdate " \
      "< '1995-03-15' and l_shipdate > '1995-03-15' group by l_orderkey, o_totalprice, o_shippriority order by revenue " \
-     "desc limit 10;"
-Q3_1 = "select l_orderkey as orderkey, sum(l_extendedprice * (1-l_discount) + l_quantity) as revenue, o_orderdate as " \
-       "orderdate, " \
+     "desc, totalprice limit 10;"
+Q3_1 = "select l_orderkey as orderkey, sum(l_extendedprice*(1 - l_discount) + l_quantity) as revenue, o_orderdate as orderdate, " \
        "o_shippriority as " \
        "shippriority from customer, orders, " \
        "lineitem where c_mktsegment = 'BUILDING' and c_custkey = o_custkey and l_orderkey = o_orderkey and o_orderdate " \
        "< '1995-03-15' and l_shipdate > '1995-03-15' group by l_orderkey, o_orderdate, o_shippriority order by revenue " \
-       "desc, o_orderdate, l_orderkey limit 10;"
+       "desc, o_orderdate asc, l_orderkey limit 10;"
 
 Q4 = "Select o_orderdate, o_orderpriority, count(*) as order_count From orders Where o_orderdate >= date '1997-07-01' " \
      "and o_orderdate < date '1997-07-01' + interval '3' month Group By o_orderdate, o_orderpriority Order By " \
@@ -81,8 +102,7 @@ Q10_simple = "select c_custkey, c_name, sum(l_extendedprice) as revenue, " \
              "and l_returnflag = 'R' and c_nationkey = n_nationkey group by " \
              "c_custkey, c_name, c_acctbal, c_phone, n_name, c_address, c_comment;"
 
-queries_dict = {'tpch_query1': tpch_query1,
-                'tpch_query3': tpch_query3,
+queries_dict = {'tpch_query3': tpch_query3,
                 'Q1': Q1,
                 'Q3': Q3,
                 'Q3_1': Q3_1,
@@ -97,7 +117,10 @@ queries_dict = {'tpch_query1': tpch_query1,
                 'Q21': Q21,
                 'Q23_1': Q23_1,
                 'Q9_simple': Q9_simple,
-                'Q10_simple': Q10_simple
+                'Q10_simple': Q10_simple,
+                'q1': q1,
+                'q1_simple': q1_simple,
+                'q1_filter': q1_filter
                 }
 
 '''
