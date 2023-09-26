@@ -437,16 +437,16 @@ class Projection(GenerationPipeLineBase):
         coeff = np.zeros((2 ** n, 2 ** n))
 
         for i in range(n):
-            coeff[0][i] = value_used[value_used.index(dep[i][1]) +1]
-        temp_array = self.get_coeff_list(coeff[0][:n])
-        for i in range(2**n-1):
+            coeff[0][i] = value_used[value_used.index(dep[i][1]) + 1]
+        temp_array = get_param_values_external(coeff[0][:n])
+        for i in range(2 ** n - 1):
             # Given the values of the n dependencies, we form the rest 2^n - n combinations
             coeff[0][i] = temp_array[i]
-        
-        coeff[0][2**n-1] = 1
-        
+
+        coeff[0][2 ** n - 1] = 1
+
         local_param_list = self.get_param_list([i[1] for i in dep])
-        print("Param List", local_param_list)
+        # print("Param List", local_param_list)
         self.param_list.append(local_param_list)
         curr_rank = 1
         outer_idx = 1
@@ -460,10 +460,10 @@ class Projection(GenerationPipeLineBase):
                     mi = fil_check[j][3]
                     ma = fil_check[j][4]
                 coeff[outer_idx][j] = random.randrange(mi, ma)
-            temp_array = self.get_coeff_list(coeff[outer_idx][:n])
-            for j in range(2**n-1):
+            temp_array = get_param_values_external(coeff[outer_idx][:n])
+            for j in range(2 ** n - 1):
                 coeff[outer_idx][j] = temp_array[j]
-            coeff[outer_idx][2**n-1] = 1
+            coeff[outer_idx][2 ** n - 1] = 1
             if np.linalg.matrix_rank(coeff) > curr_rank:
                 curr_rank += 1
                 outer_idx += 1
@@ -479,8 +479,8 @@ class Projection(GenerationPipeLineBase):
 
         solution = np.linalg.solve(coeff, b)
         solution = np.around(solution, decimals=0)
-        print("Equation", coeff, b)
-        print("Solution", solution)
+        # print("Equation", coeff, b)
+        # print("Solution", solution)
         return solution
 
     def build_equation(self, projected_attrib, projection_dep, projection_sol):
@@ -507,14 +507,14 @@ class Projection(GenerationPipeLineBase):
                 if solution[i][0] > 0:
                     res_str += "+"
                 res_str += (str(solution[i][0]) + "*" + param_l[i]) if solution[i][0] != 1 else param_l[i]
-        print("Result String", res_str)
+        # print("Result String", res_str)
         return res_str
 
     def get_param_list(self, deps):
-        print(deps)
+        # print(deps)
         subsets = get_subsets(deps)
         subsets = sorted(subsets, key=len)
-        print(subsets)
+        # print(subsets)
         final_lis = []
         for i in subsets:
             if len(i) < 2 and i == []:
@@ -526,7 +526,8 @@ class Projection(GenerationPipeLineBase):
                     temp_str += "*"
             final_lis.append(temp_str)
         return final_lis
-    def get_coeff_list(self, coeff_arr):
+
+def get_param_values_external(coeff_arr):
         print(coeff_arr)
         subsets = get_subsets(coeff_arr)
         subsets = sorted(subsets, key=len)
