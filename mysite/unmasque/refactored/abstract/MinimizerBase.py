@@ -1,3 +1,4 @@
+from mysite.unmasque.refactored.initialization import Initiator
 from ...refactored.abstract.ExtractorBase import Base
 from ...refactored.executable import Executable
 

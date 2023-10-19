@@ -1,3 +1,4 @@
+from mysite.unmasque.refactored.having_minimizer import HavingMinimizer
 from mysite.unmasque.src.core.QueryStringGenerator import QueryStringGenerator
 from mysite.unmasque.src.core.elapsed_time import create_zero_time_profile
 from mysite.unmasque.src.util.ConnectionHelper import ConnectionHelper
@@ -38,6 +39,11 @@ def extract(query):
     time_profile.update_for_cs2(cs2.local_elapsed_time)
     if not check or not cs2.done:
         print("Sampling failed!")
+
+    hm = HavingMinimizer(connectionHelper, fc.core_relations, cs2.sizes, cs2.passed)
+    check = hm.doJob(query)
+    if check:
+        print("[c] Having minimizer completed")
 
     '''
     Database Minimization: View Minimization
